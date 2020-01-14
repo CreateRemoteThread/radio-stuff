@@ -50,7 +50,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [590, 8]
+    coordinate: [493, 11]
     rotation: 0
     state: true
 - name: carrier_freq2
@@ -63,6 +63,27 @@ blocks:
     bus_source: false
     bus_structure: null
     coordinate: [293, 14]
+    rotation: 0
+    state: true
+- name: rx_gain_var
+  id: variable_qtgui_range
+  parameters:
+    comment: ''
+    gui_hint: ''
+    label: rx gain
+    min_len: '50'
+    orient: Qt.Horizontal
+    rangeType: int
+    start: '10'
+    step: '1'
+    stop: '45'
+    value: '30'
+    widget: counter_slider
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [721, 4]
     rotation: 0
     state: true
 - name: samp_rate
@@ -84,12 +105,33 @@ blocks:
     gui_hint: ''
     label: Test Wave Frequency
     type: int
-    value: '5000'
+    value: '7000'
   states:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [416, 6]
+    coordinate: [47, 150]
+    rotation: 0
+    state: true
+- name: tx_gain_var
+  id: variable_qtgui_range
+  parameters:
+    comment: ''
+    gui_hint: ''
+    label: tx gain
+    min_len: '50'
+    orient: Qt.Horizontal
+    rangeType: int
+    start: '10'
+    step: '1'
+    stop: '45'
+    value: '35'
+    widget: counter_slider
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [56, 285]
     rotation: 0
     state: true
 - name: analog_const_source_x_0
@@ -106,9 +148,9 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [519, 384]
+    coordinate: [519, 385]
     rotation: 0
-    state: enabled
+    state: disabled
 - name: analog_sig_source_x_0
   id: analog_sig_source_x
   parameters:
@@ -128,9 +170,25 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [312, 429]
+    coordinate: [307, 430]
     rotation: 0
-    state: disabled
+    state: enabled
+- name: blocks_complex_to_mag_0
+  id: blocks_complex_to_mag
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: ''
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    vlen: '1'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [649, 263]
+    rotation: 0
+    state: true
 - name: blocks_complex_to_mag_squared_0
   id: blocks_complex_to_mag_squared
   parameters:
@@ -146,7 +204,7 @@ blocks:
     bus_structure: null
     coordinate: [633, 169]
     rotation: 0
-    state: enabled
+    state: disabled
 - name: blocks_multiply_const_vxx_0
   id: blocks_multiply_const_vxx
   parameters:
@@ -171,7 +229,7 @@ blocks:
     affinity: ''
     alias: ''
     comment: ''
-    length: '32'
+    length: '100'
     long_form: 'True'
     maxoutbuf: '0'
     minoutbuf: '0'
@@ -180,7 +238,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [1008, 163]
+    coordinate: [1077, 66]
     rotation: 0
     state: enabled
 - name: low_pass_filter_0
@@ -204,7 +262,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [810, 210]
+    coordinate: [867, 241]
     rotation: 0
     state: true
 - name: osmosdr_sink_0
@@ -277,7 +335,7 @@ blocks:
     bb_gain7: '20'
     bb_gain8: '20'
     bb_gain9: '20'
-    bw0: '3000000'
+    bw0: '30000'
     bw1: '0'
     bw10: '0'
     bw11: '0'
@@ -382,7 +440,7 @@ blocks:
     freq7: 100e6
     freq8: 100e6
     freq9: 100e6
-    gain0: '20'
+    gain0: tx_gain_var
     gain1: '10'
     gain10: '10'
     gain11: '10'
@@ -538,7 +596,7 @@ blocks:
     bb_gain7: '20'
     bb_gain8: '20'
     bb_gain9: '20'
-    bw0: '3000000'
+    bw0: '30000'
     bw1: '0'
     bw10: '0'
     bw11: '0'
@@ -675,7 +733,7 @@ blocks:
     freq7: 100e6
     freq8: 100e6
     freq9: 100e6
-    gain0: '10'
+    gain0: rx_gain_var
     gain1: '10'
     gain10: '10'
     gain11: '10'
@@ -822,7 +880,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [344, 103]
+    coordinate: [223, 155]
     rotation: 0
     state: true
 - name: qtgui_freq_sink_x_0
@@ -902,7 +960,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [1372, 96]
+    coordinate: [1279, 58]
     rotation: 0
     state: true
 - name: qtgui_time_sink_x_0
@@ -1006,11 +1064,12 @@ blocks:
 connections:
 - [analog_const_source_x_0, '0', osmosdr_sink_0, '0']
 - [analog_sig_source_x_0, '0', osmosdr_sink_0, '0']
-- [blocks_complex_to_mag_squared_0, '0', low_pass_filter_0, '0']
+- [blocks_complex_to_mag_0, '0', low_pass_filter_0, '0']
 - [blocks_multiply_const_vxx_0, '0', qtgui_freq_sink_x_0, '0']
 - [blocks_multiply_const_vxx_0, '0', qtgui_time_sink_x_0, '0']
 - [dc_blocker_xx_0, '0', blocks_multiply_const_vxx_0, '0']
 - [low_pass_filter_0, '0', dc_blocker_xx_0, '0']
+- [osmosdr_source_0, '0', blocks_complex_to_mag_0, '0']
 - [osmosdr_source_0, '0', blocks_complex_to_mag_squared_0, '0']
 
 metadata:
