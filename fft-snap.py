@@ -48,7 +48,7 @@ CONFIG_GAIN = None
 
 def saneUnits(str_freq):
   if str_freq[-1] in ('m','M'):
-    return int(strfreq[0:-1]) * 1024 ** 2
+    return int(str_freq[0:-1]) * 1024 ** 2
   else:
     return int(str_freq)
 
@@ -67,7 +67,7 @@ if __name__ == "__main__":
       CONFIG_GAIN = float(arg)
   if CONFIG_PREFIX == "output/fft":
     os.system("mkdir output")
-  args = dict(driver="uhd")
+  args = dict(driver=CONFIG_DRIVER)
   sdr = SoapySDR.Device(args)
   if CONFIG_GAIN is not None:
     sdr.setGain(SOAPY_SDR_RX, 0, CONFIG_GAIN)
